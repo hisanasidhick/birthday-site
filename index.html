@@ -7,31 +7,67 @@
 <style>
 body{
     margin:0;
-    font-family:Arial;
-    text-align:center;
-    background:linear-gradient(135deg,#ff758c,#ffb199);
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#ff6a88,#ff99ac);
     color:white;
+    text-align:center;
     overflow-x:hidden;
 }
 
+/* Floating hearts */
+.heart{
+    position:fixed;
+    bottom:-20px;
+    font-size:20px;
+    animation:float 6s linear infinite;
+    opacity:.7;
+}
+@keyframes float{
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+
+/* Main container */
+.container{
+    padding:40px 20px;
+}
+
 h1{
-    margin-top:50px;
-    font-size:45px;
+    font-size:48px;
     animation:glow 2s infinite alternate;
 }
 
 @keyframes glow{
     from{ text-shadow:0 0 10px white;}
-    to{ text-shadow:0 0 30px #ff0066;}
+    to{ text-shadow:0 0 30px #ff0055;}
 }
 
+/* Image reveal */
+.photo{
+    width:240px;
+    border-radius:20px;
+    margin-top:20px;
+    opacity:0;
+    transform:scale(.8);
+    transition:1s;
+    box-shadow:0 0 25px white;
+}
+
+.showPhoto{
+    opacity:1;
+    transform:scale(1);
+}
+
+/* Buttons */
 button{
     padding:12px 22px;
     margin:10px;
     border:none;
-    border-radius:25px;
+    border-radius:30px;
     background:white;
-    color:#ff4d88;
+    color:#ff3f7f;
     font-size:16px;
     cursor:pointer;
     transition:.3s;
@@ -41,140 +77,130 @@ button:hover{
     transform:scale(1.1);
 }
 
+/* Cards */
 .card{
     display:none;
-    margin-top:20px;
-    font-size:20px;
+    margin:25px auto;
     width:80%;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-.heart{
-    font-size:40px;
-    animation:beat 1s infinite;
-}
-
-@keyframes beat{
-    50%{transform:scale(1.2);}
-}
-
-/* Childhood Image */
-.photo{
-    width:220px;
-    border-radius:20px;
-    box-shadow:0 0 20px white;
-    transition:0.4s;
-}
-
-.photo:hover{
-    transform:scale(1.1);
+    font-size:20px;
+    background:rgba(255,255,255,0.15);
+    padding:20px;
+    border-radius:15px;
 }
 
 /* Confetti */
 .confetti{
     position:fixed;
-    width:10px;
-    height:10px;
+    width:8px;
+    height:8px;
     background:white;
     top:-10px;
     animation:fall linear infinite;
 }
-
 @keyframes fall{
-    to{
-        transform:translateY(100vh) rotate(360deg);
-    }
-}
-
-.gameBox{
-    display:none;
-    margin-top:20px;
-    font-size:22px;
+    to{transform:translateY(100vh) rotate(360deg);}
 }
 </style>
 </head>
 
 <body>
 
-<h1>🎉 Happy Birthday My Future Husband 🎉</h1>
-<p>You are my favorite future ❤️</p>
+<div class="container">
 
-<!-- Childhood Photo -->
-<div style="margin-top:30px;">
-    <h2>From Little Cutie 👶 to My Forever ❤️</h2>
-    <img src="childhood.jpg" class="photo">
-</div>
+<h1>🎉 Happy Birthday My Future Husband 🎉</h1>
+<p>You are my favorite chapter of the future ❤️</p>
+
+<button onclick="revealPhoto()">👶 See Your Childhood Smile</button>
 
 <br>
+<img src="childhood.jpg" id="photo" class="photo">
 
-<button onclick="showSurprise()">🎁 Open Surprise</button>
+<br><br>
+
+<button onclick="showSurprise()">🎁 Surprise</button>
 <button onclick="cutCake()">🎂 Cut Cake</button>
 <button onclick="showLetter()">💌 Secret Letter</button>
 <button onclick="startGame()">🎮 Love Game</button>
 
-<!-- Surprise -->
 <div id="surprise" class="card">
-    <p class="heart">❤️</p>
-    <p>You make my future feel safe, warm, and beautiful.</p>
-    <p>I can't wait to celebrate every birthday beside you.</p>
+❤️ From a little boy with big dreams  
+to the man who makes my heart feel home.
 </div>
 
-<!-- Love Letter -->
 <div id="letter" class="card">
-<p>
 Dear Love,<br><br>
-Maybe today is your birthday,  
-but you are the gift life is preparing for me.<br><br>
-
-From your childhood smiles to the man you are becoming,
-every version of you is special to me.<br><br>
-
-I hope our future is filled with laughter,
-late-night talks, silly fights,
-and endless memories together. 💫❤️
-</p>
+Maybe today is your birthday…  
+but you are the gift life saved for me.  
+I hope one day we laugh about this moment together,
+celebrating many birthdays side by side. 💫❤️
 </div>
 
-<!-- Game -->
-<div id="game" class="gameBox">
-<p>Who loves you more? 😌</p>
-<button onclick="gameAnswer()">Click to find out</button>
-<p id="gameResult"></p>
+<div id="game" class="card">
+<p>Who loves you the most? 😌</p>
+<button onclick="answer()">Click here</button>
+<p id="result"></p>
+</div>
+
+<br>
+<button onclick="playMusic()">🎵 Play Birthday Music</button>
+<audio id="music" loop>
+<source src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9bce27.mp3">
+</audio>
+
 </div>
 
 <script>
-function showSurprise(){
-    document.getElementById("surprise").style.display="block";
+
+/* Floating hearts generator */
+setInterval(()=>{
+ let h=document.createElement("div");
+ h.className="heart";
+ h.innerHTML="❤️";
+ h.style.left=Math.random()*100+"vw";
+ h.style.fontSize=(15+Math.random()*20)+"px";
+ document.body.appendChild(h);
+ setTimeout(()=>h.remove(),6000);
+},500);
+
+function revealPhoto(){
+ document.getElementById("photo").classList.add("showPhoto");
 }
 
-/* Cake + Confetti */
-function cutCake(){
-    for(let i=0;i<70;i++){
-        let c=document.createElement("div");
-        c.className="confetti";
-        c.style.left=Math.random()*100+"vw";
-        c.style.animationDuration=(Math.random()*2+2)+"s";
-        document.body.appendChild(c);
-
-        setTimeout(()=>c.remove(),4000);
-    }
-    alert("🎂 Cake Cut! Make a birthday wish ❤️");
+function showSurprise(){
+ document.getElementById("surprise").style.display="block";
 }
 
 function showLetter(){
-    document.getElementById("letter").style.display="block";
+ document.getElementById("letter").style.display="block";
 }
 
 function startGame(){
-    document.getElementById("game").style.display="block";
+ document.getElementById("game").style.display="block";
 }
 
-function gameAnswer(){
-    document.getElementById("gameResult")
-    .innerHTML="Correct answer: YOU + ME = FOREVER 😄❤️";
+function answer(){
+ document.getElementById("result").innerHTML=
+ "Correct answer: YOU + ME = FOREVER ❤️";
+}
+
+/* Cake confetti */
+function cutCake(){
+ for(let i=0;i<80;i++){
+  let c=document.createElement("div");
+  c.className="confetti";
+  c.style.left=Math.random()*100+"vw";
+  c.style.animationDuration=(Math.random()*2+2)+"s";
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),4000);
+ }
+ alert("🎂 Make a birthday wish!");
+}
+
+function playMusic(){
+ document.getElementById("music").play();
 }
 </script>
 
 </body>
 </html>
+
