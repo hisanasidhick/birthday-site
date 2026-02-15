@@ -1,176 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Mission Birthday ❤️</title>
+<title>Hey Sanhan 💫</title>
 
 <style>
-html, body{
+body{
     margin:0;
-    padding:0;
-    background-color:black;
-    color:white;
-    height:100%;
-}
-.screen{
+    font-family: Arial, sans-serif;
     background:black;
+    color:white;
+    text-align:center;
+    overflow:hidden;
 }
 
-
-/* screens */
-.screen{
- position:absolute;
- width:100%;
- height:100vh;
- display:none;
- justify-content:center;
- align-items:center;
- flex-direction:column;
- padding:20px;
+.container{
+    margin-top:80px;
 }
 
-.show{ display:flex; }
-
-/* buttons */
-button{
- padding:14px 26px;
- margin:10px;
- border:none;
- border-radius:30px;
- background:#ff4d88;
- color:white;
- font-size:16px;
- cursor:pointer;
- transition:.3s;
-}
-
-button:hover{
- transform:scale(1.1);
- background:#ff1f6b;
-}
-
-/* glowing title */
-.title{
- font-size:45px;
- animation:glow 2s infinite alternate;
+h1{
+    font-size:40px;
+    animation: glow 2s infinite alternate;
 }
 
 @keyframes glow{
- from{ text-shadow:0 0 10px #fff;}
- to{ text-shadow:0 0 25px #ff4d88;}
+    from{ text-shadow:0 0 10px pink; }
+    to{ text-shadow:0 0 25px hotpink; }
 }
 
-/* photo reward */
-.photo{
- width:250px;
- border-radius:20px;
- box-shadow:0 0 30px #fff;
- animation:pop 1s ease;
+button{
+    padding:12px 20px;
+    margin:10px;
+    border:none;
+    border-radius:25px;
+    background:hotpink;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
 }
 
-@keyframes pop{
- from{transform:scale(0);}
- to{transform:scale(1);}
+button:hover{
+    transform:scale(1.1);
+    background:deeppink;
 }
 
-/* confetti */
-.confetti{
- position:fixed;
- width:8px;
- height:8px;
- background:white;
- top:-10px;
- animation:fall 3s linear infinite;
+#message{
+    margin-top:25px;
+    font-size:22px;
+    min-height:40px;
 }
-@keyframes fall{
- to{transform:translateY(100vh) rotate(360deg);}
+
+/* floating hearts */
+.heart{
+    position:absolute;
+    color:pink;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float{
+    from{ transform:translateY(100vh); opacity:1;}
+    to{ transform:translateY(-10vh); opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<!-- START -->
-<div id="s1" class="screen show">
-<h1 class="title">🎮 Mission: Birthday Surprise</h1>
-<p>Your task: Complete the mission to unlock your gift ❤️</p>
-<button onclick="next(2)">Start Mission</button>
-</div>
+<div class="container">
+    <h1>💖 Welcome Sanhan 💖</h1>
+    <p>Choose wisely... your fate depends on it 😌</p>
 
-<!-- QUESTION 1 -->
-<div id="s2" class="screen">
-<h2>First Question 😌</h2>
-<p>Who is secretly planning this surprise?</p>
-<button onclick="correct()">Someone who loves you ❤️</button>
-<button onclick="wrong()">Your neighbour 😄</button>
-</div>
+    <button onclick="fun(0)">Are you awesome?</button>
+    <button onclick="fun(1)">Do you like surprises?</button>
+    <button onclick="fun(2)">Press for magic ✨</button>
+    <button onclick="fun(3)">Secret button 👀</button>
 
-<!-- QUESTION 2 -->
-<div id="s3" class="screen">
-<h2>Second Challenge 🎯</h2>
-<p>Choose your birthday power:</p>
-<button onclick="correct()">Unlimited Cake 🎂</button>
-<button onclick="correct()">Unlimited Hugs 🤗</button>
-</div>
-
-<!-- REWARD -->
-<div id="s4" class="screen">
-<h2>Mission Reward Unlocked 👶</h2>
-<p>You found a hidden memory...</p>
-<img src="childhood.jpg" class="photo">
-<button onclick="next(5)">Continue Story →</button>
-</div>
-
-<!-- LETTER -->
-<div id="s5" class="screen">
-<h2>A Message For You 💌</h2>
-<p style="max-width:600px">
-From a little boy with big dreams
-to someone who makes my future feel warm —
-I hope one day we celebrate birthdays together,
-laughing at this exact moment ❤️
-</p>
-<button onclick="celebrate()">Open Final Surprise 🎉</button>
-</div>
-
-<!-- FINAL -->
-<div id="s6" class="screen">
-<h1 class="title">🎉 HAPPY BIRTHDAY 🎉</h1>
-<h2>You completed the mission ❤️</h2>
-<p>Your real gift is… someone who cares about you a lot 😄</p>
+    <div id="message"></div>
 </div>
 
 <script>
 
-/* change screens */
-function next(n){
- document.querySelectorAll(".screen")
- .forEach(s=>s.classList.remove("show"));
- document.getElementById("s"+n).classList.add("show");
+const replies = [
+"Correct answer ✅ Obviously you are!",
+"Good 😌 because surprises are coming!",
+"✨ MAGIC ACTIVATED ✨ You unlocked 100 happiness points!",
+"You found the secret 😲 Achievement unlocked!"
+];
+
+function fun(n){
+    document.getElementById("message").innerText = replies[n];
+    createHearts();
 }
 
-function correct(){
- next(3);
-}
+/* funny random messages every 6 sec */
+const randomTexts = [
+"Reminder: You are legally required to smile 😄",
+"Warning ⚠️ Too much charm detected!",
+"System message: Someone is thinking about you 👀",
+"Loading happiness... 100% complete 💕"
+];
 
-function wrong(){
- alert("Wrong answer 😄 Try again!");
-}
+setInterval(()=>{
+    document.getElementById("message").innerText =
+    randomTexts[Math.floor(Math.random()*randomTexts.length)];
+},6000);
 
-/* celebration */
-function celebrate(){
- next(6);
 
- for(let i=0;i<120;i++){
-  let c=document.createElement("div");
-  c.className="confetti";
-  c.style.left=Math.random()*100+"vw";
-  document.body.appendChild(c);
-  setTimeout(()=>c.remove(),4000);
- }
+/* floating hearts animation */
+function createHearts(){
+    for(let i=0;i<15;i++){
+        let heart=document.createElement("div");
+        heart.className="heart";
+        heart.innerText="❤";
+        heart.style.left=Math.random()*100+"vw";
+        heart.style.fontSize=(15+Math.random()*25)+"px";
+        heart.style.animationDuration=(3+Math.random()*3)+"s";
+        document.body.appendChild(heart);
+
+        setTimeout(()=>heart.remove(),5000);
+    }
 }
 
 </script>
 
 </body>
 </html>
+
