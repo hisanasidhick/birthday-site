@@ -143,6 +143,31 @@ laughing at this exact moment ❤️
 function next(n){
  document.querySelectorAll(".screen")
  .forEach(s=>s.classList.remove("show"));
- document.getEle
+ document.getElementById("s"+n).classList.add("show");
+}
 
- 
+function correct(){
+ next(3);
+}
+
+function wrong(){
+ alert("Wrong answer 😄 Try again!");
+}
+
+/* celebration */
+function celebrate(){
+ next(6);
+
+ for(let i=0;i<120;i++){
+  let c=document.createElement("div");
+  c.className="confetti";
+  c.style.left=Math.random()*100+"vw";
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),4000);
+ }
+}
+
+</script>
+
+</body>
+</html>
