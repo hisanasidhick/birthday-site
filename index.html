@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Sanhan's Fun Game 💫</title>
+<title>For My Future Husband 💫</title>
 
 <style>
 body{
@@ -14,164 +14,184 @@ body{
     overflow:hidden;
 }
 
-h1{
-    margin-top:60px;
+/* screens */
+.screen{
+    display:none;
+    height:100vh;
+    padding-top:80px;
+}
+.active{display:block;}
+
+h1,h2{
     text-shadow:0 0 20px hotpink;
 }
 
-#game{
-    margin-top:40px;
-}
-
 button{
-    padding:12px 22px;
+    padding:12px 25px;
     margin:15px;
     border:none;
     border-radius:25px;
-    font-size:18px;
-    cursor:pointer;
     background:hotpink;
     color:white;
-    transition:0.3s;
-    position:relative;
-}
-
-button:hover{
-    transform:scale(1.1);
-}
-
-#score{
-    position:fixed;
-    top:10px;
-    right:20px;
     font-size:18px;
-    color:pink;
+    cursor:pointer;
+    transition:.3s;
+}
+button:hover{transform:scale(1.1);}
+
+/* childhood image */
+img{
+    width:260px;
+    border-radius:20px;
+    box-shadow:0 0 25px pink;
 }
 
 /* floating hearts */
 .heart{
     position:absolute;
     color:pink;
-    animation:float 4s linear forwards;
+    animation:float 5s linear forwards;
 }
 
 @keyframes float{
-    from{transform:translateY(100vh);opacity:1;}
-    to{transform:translateY(-10vh);opacity:0;}
+from{transform:translateY(100vh);opacity:1;}
+to{transform:translateY(-10vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<div id="score">Score: 0</div>
+<!-- SCREEN 1 INTRO -->
+<div id="intro" class="screen active">
+<h1>🎬 Loading Love Story...</h1>
+<p>A special mission is about to begin...</p>
+<button onclick="next('game')">Start Journey 💫</button>
+</div>
 
-<h1>🎮 Ultimate Fun Challenge</h1>
+<!-- SCREEN 2 GAME -->
+<div id="game" class="screen">
+<h2 id="question">Ready?</h2>
+<div id="buttons"></div>
+</div>
 
-<div id="game">
-<h2 id="question">Ready to start?</h2>
-<button onclick="startGame()">START</button>
+<!-- SCREEN 3 CHILDHOOD PIC -->
+<div id="childhood" class="screen">
+<h1>📸 Once Upon a Time...</h1>
+<p>This little boy didn’t know someone would
+create a whole website for him one day 🤭</p>
+
+<img src="childhood.jpg" alt="Childhood Photo">
+
+<br><br>
+<button onclick="next('letter')">Continue ➜</button>
+</div>
+
+<!-- SCREEN 4 LETTER -->
+<div id="letter" class="screen">
+<h1>💌 A Letter For You</h1>
+
+<p style="width:70%;margin:auto;line-height:1.8;font-size:18px;">
+From childhood smiles to today’s dreams,
+you grew into someone truly special.
+Maybe life didn’t tell you enough,
+but you deserve happiness, laughter,
+and someone who celebrates you every day.
+Today is not just your birthday —
+it’s the day the world got luckier. ✨
+</p>
+
+<button onclick="next('wish')">Read Final Wish 🎂</button>
+</div>
+
+<!-- SCREEN 5 WISH -->
+<div id="wish" class="screen">
+<h1>🎉 Happy Birthday!</h1>
+
+<h2>
+May your life be full of adventures,
+peace, success and endless smiles 💫
+</h2>
+
+<p>And maybe… a little extra love from me 😌</p>
+
+<button onclick="magic()">Reveal Magic ✨</button>
+</div>
+
+<!-- SCREEN 6 END -->
+<div id="end" class="screen">
+<h1>💖 Mission Complete 💖</h1>
+<h2>You unlocked unlimited happiness!</h2>
+<button onclick="location.reload()">Play Again</button>
 </div>
 
 <script>
 
-let score = 0;
-let qIndex = 0;
-
-const questions = [
+let questions=[
+"Are you ready for fun?",
+"Do you deserve cake?",
 "Are you secretly awesome?",
-"Do you smile at random moments?",
-"Do you like surprises?",
-"Would you press mysterious buttons?",
-"Are you a certified cool person?",
-"Do you laugh at silly jokes?",
-"Chocolate or more chocolate?",
-"Do you enjoy fun games?",
-"Are you ready for chaos?",
-"Do you think today is lucky?",
-"Do you deserve happiness?",
-"Do you like winning?",
-"Are you still clicking?",
-"Almost there… still awesome?",
-"Final question: Should you get a reward?"
+"Should today be amazing?",
+"Do you like surprises?"
 ];
 
-function startGame(){
-    nextQuestion();
+let q=0;
+
+function next(id){
+document.querySelectorAll(".screen")
+.forEach(s=>s.classList.remove("active"));
+
+document.getElementById(id).classList.add("active");
+
+if(id==="game") ask();
 }
 
-function nextQuestion(){
-    if(qIndex >= questions.length){
-        ending();
-        return;
-    }
+function ask(){
+if(q>=questions.length){
+next("childhood");
+return;
+}
 
-    document.getElementById("game").innerHTML = `
-        <h2>${questions[qIndex]}</h2>
-        <button onclick="yes()">YES 😌</button>
-        <button id="noBtn" onmouseover="runAway()">NO 😏</button>
-    `;
+document.getElementById("question").innerText=questions[q];
+
+document.getElementById("buttons").innerHTML=`
+<button onclick="yes()">YES 😄</button>
+<button id="no" onmouseover="run()">NO 😏</button>
+`;
 }
 
 function yes(){
-    score += 10;
-    updateScore();
-    hearts();
-    qIndex++;
-    nextQuestion();
+hearts();
+q++;
+ask();
 }
 
-function runAway(){
-    let btn = document.getElementById("noBtn");
-    btn.style.position="absolute";
-    btn.style.left = Math.random()*80+"vw";
-    btn.style.top = Math.random()*80+"vh";
+function run(){
+let btn=document.getElementById("no");
+btn.style.position="absolute";
+btn.style.left=Math.random()*80+"vw";
+btn.style.top=Math.random()*80+"vh";
 }
 
-function updateScore(){
-    document.getElementById("score").innerText="Score: "+score;
+function magic(){
+hearts();
+next("end");
 }
 
-function ending(){
-    let message;
-
-    if(score >= 120){
-        message="🏆 LEGEND STATUS UNLOCKED! Maximum fun achieved!";
-    }else if(score >=80){
-        message="✨ You passed the vibe check!";
-    }else{
-        message="😄 Still fun! Try again for secret ending!";
-    }
-
-    document.getElementById("game").innerHTML = `
-        <h2>${message}</h2>
-        <button onclick="secret()">Open Secret Ending 👀</button>
-    `;
-}
-
-function secret(){
-    document.getElementById("game").innerHTML = `
-        <h2>💫 Secret Unlocked 💫</h2>
-        <p>You completed the game and unlocked unlimited smiles 😄</p>
-        <button onclick="location.reload()">Play Again</button>
-    `;
-    hearts();
-}
-
+/* hearts animation */
 function hearts(){
-    for(let i=0;i<20;i++){
-        let h=document.createElement("div");
-        h.className="heart";
-        h.innerText="❤";
-        h.style.left=Math.random()*100+"vw";
-        h.style.fontSize=(15+Math.random()*25)+"px";
-        document.body.appendChild(h);
-        setTimeout(()=>h.remove(),4000);
-    }
+for(let i=0;i<20;i++){
+let h=document.createElement("div");
+h.className="heart";
+h.innerText="❤";
+h.style.left=Math.random()*100+"vw";
+h.style.fontSize=(15+Math.random()*25)+"px";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+}
 }
 
 </script>
 
 </body>
 </html>
-
