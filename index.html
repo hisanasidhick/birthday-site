@@ -1,124 +1,172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>Hey Sanhan 💫</title>
+<title>Sanhan's Fun Game 💫</title>
 
 <style>
 body{
     margin:0;
-    font-family: Arial, sans-serif;
     background:black;
     color:white;
+    font-family:Arial;
     text-align:center;
     overflow:hidden;
 }
 
-.container{
-    margin-top:80px;
-}
-
 h1{
-    font-size:40px;
-    animation: glow 2s infinite alternate;
+    margin-top:60px;
+    text-shadow:0 0 20px hotpink;
 }
 
-@keyframes glow{
-    from{ text-shadow:0 0 10px pink; }
-    to{ text-shadow:0 0 25px hotpink; }
+#game{
+    margin-top:40px;
 }
 
 button{
-    padding:12px 20px;
-    margin:10px;
+    padding:12px 22px;
+    margin:15px;
     border:none;
     border-radius:25px;
+    font-size:18px;
+    cursor:pointer;
     background:hotpink;
     color:white;
-    font-size:16px;
-    cursor:pointer;
     transition:0.3s;
+    position:relative;
 }
 
 button:hover{
     transform:scale(1.1);
-    background:deeppink;
 }
 
-#message{
-    margin-top:25px;
-    font-size:22px;
-    min-height:40px;
+#score{
+    position:fixed;
+    top:10px;
+    right:20px;
+    font-size:18px;
+    color:pink;
 }
 
 /* floating hearts */
 .heart{
     position:absolute;
     color:pink;
-    animation: float 5s linear infinite;
+    animation:float 4s linear forwards;
 }
 
 @keyframes float{
-    from{ transform:translateY(100vh); opacity:1;}
-    to{ transform:translateY(-10vh); opacity:0;}
+    from{transform:translateY(100vh);opacity:1;}
+    to{transform:translateY(-10vh);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>💖 Welcome Sanhan 💖</h1>
-    <p>Choose wisely... your fate depends on it 😌</p>
+<div id="score">Score: 0</div>
 
-    <button onclick="fun(0)">Are you awesome?</button>
-    <button onclick="fun(1)">Do you like surprises?</button>
-    <button onclick="fun(2)">Press for magic ✨</button>
-    <button onclick="fun(3)">Secret button 👀</button>
+<h1>🎮 Ultimate Fun Challenge</h1>
 
-    <div id="message"></div>
+<div id="game">
+<h2 id="question">Ready to start?</h2>
+<button onclick="startGame()">START</button>
 </div>
 
 <script>
 
-const replies = [
-"Correct answer ✅ Obviously you are!",
-"Good 😌 because surprises are coming!",
-"✨ MAGIC ACTIVATED ✨ You unlocked 100 happiness points!",
-"You found the secret 😲 Achievement unlocked!"
+let score = 0;
+let qIndex = 0;
+
+const questions = [
+"Are you secretly awesome?",
+"Do you smile at random moments?",
+"Do you like surprises?",
+"Would you press mysterious buttons?",
+"Are you a certified cool person?",
+"Do you laugh at silly jokes?",
+"Chocolate or more chocolate?",
+"Do you enjoy fun games?",
+"Are you ready for chaos?",
+"Do you think today is lucky?",
+"Do you deserve happiness?",
+"Do you like winning?",
+"Are you still clicking?",
+"Almost there… still awesome?",
+"Final question: Should you get a reward?"
 ];
 
-function fun(n){
-    document.getElementById("message").innerText = replies[n];
-    createHearts();
+function startGame(){
+    nextQuestion();
 }
 
-/* funny random messages every 6 sec */
-const randomTexts = [
-"Reminder: You are legally required to smile 😄",
-"Warning ⚠️ Too much charm detected!",
-"System message: Someone is thinking about you 👀",
-"Loading happiness... 100% complete 💕"
-];
+function nextQuestion(){
+    if(qIndex >= questions.length){
+        ending();
+        return;
+    }
 
-setInterval(()=>{
-    document.getElementById("message").innerText =
-    randomTexts[Math.floor(Math.random()*randomTexts.length)];
-},6000);
+    document.getElementById("game").innerHTML = `
+        <h2>${questions[qIndex]}</h2>
+        <button onclick="yes()">YES 😌</button>
+        <button id="noBtn" onmouseover="runAway()">NO 😏</button>
+    `;
+}
 
+function yes(){
+    score += 10;
+    updateScore();
+    hearts();
+    qIndex++;
+    nextQuestion();
+}
 
-/* floating hearts animation */
-function createHearts(){
-    for(let i=0;i<15;i++){
-        let heart=document.createElement("div");
-        heart.className="heart";
-        heart.innerText="❤";
-        heart.style.left=Math.random()*100+"vw";
-        heart.style.fontSize=(15+Math.random()*25)+"px";
-        heart.style.animationDuration=(3+Math.random()*3)+"s";
-        document.body.appendChild(heart);
+function runAway(){
+    let btn = document.getElementById("noBtn");
+    btn.style.position="absolute";
+    btn.style.left = Math.random()*80+"vw";
+    btn.style.top = Math.random()*80+"vh";
+}
 
-        setTimeout(()=>heart.remove(),5000);
+function updateScore(){
+    document.getElementById("score").innerText="Score: "+score;
+}
+
+function ending(){
+    let message;
+
+    if(score >= 120){
+        message="🏆 LEGEND STATUS UNLOCKED! Maximum fun achieved!";
+    }else if(score >=80){
+        message="✨ You passed the vibe check!";
+    }else{
+        message="😄 Still fun! Try again for secret ending!";
+    }
+
+    document.getElementById("game").innerHTML = `
+        <h2>${message}</h2>
+        <button onclick="secret()">Open Secret Ending 👀</button>
+    `;
+}
+
+function secret(){
+    document.getElementById("game").innerHTML = `
+        <h2>💫 Secret Unlocked 💫</h2>
+        <p>You completed the game and unlocked unlimited smiles 😄</p>
+        <button onclick="location.reload()">Play Again</button>
+    `;
+    hearts();
+}
+
+function hearts(){
+    for(let i=0;i<20;i++){
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerText="❤";
+        h.style.left=Math.random()*100+"vw";
+        h.style.fontSize=(15+Math.random()*25)+"px";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),4000);
     }
 }
 
