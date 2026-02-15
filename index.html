@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday ❤️</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    text-align:center;
+    background:linear-gradient(135deg,#ff758c,#ffb199);
+    color:white;
+    overflow-x:hidden;
+}
+
+h1{
+    margin-top:50px;
+    font-size:45px;
+    animation:glow 2s infinite alternate;
+}
+
+@keyframes glow{
+    from{ text-shadow:0 0 10px white;}
+    to{ text-shadow:0 0 30px #ff0066;}
+}
+
+button{
+    padding:12px 22px;
+    margin:10px;
+    border:none;
+    border-radius:25px;
+    background:white;
+    color:#ff4d88;
+    font-size:16px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.1);
+}
+
+.card{
+    display:none;
+    margin-top:20px;
+    font-size:20px;
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.heart{
+    font-size:40px;
+    animation:beat 1s infinite;
+}
+
+@keyframes beat{
+    50%{transform:scale(1.2);}
+}
+
+/* Childhood Image */
+.photo{
+    width:220px;
+    border-radius:20px;
+    box-shadow:0 0 20px white;
+    transition:0.4s;
+}
+
+.photo:hover{
+    transform:scale(1.1);
+}
+
+/* Confetti */
+.confetti{
+    position:fixed;
+    width:10px;
+    height:10px;
+    background:white;
+    top:-10px;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    to{
+        transform:translateY(100vh) rotate(360deg);
+    }
+}
+
+.gameBox{
+    display:none;
+    margin-top:20px;
+    font-size:22px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎉 Happy Birthday My Future Husband 🎉</h1>
+<p>You are my favorite future ❤️</p>
+
+<!-- Childhood Photo -->
+<div style="margin-top:30px;">
+    <h2>From Little Cutie 👶 to My Forever ❤️</h2>
+    <img src="childhood.jpg" class="photo">
+</div>
+
+<br>
+
+<button onclick="showSurprise()">🎁 Open Surprise</button>
+<button onclick="cutCake()">🎂 Cut Cake</button>
+<button onclick="showLetter()">💌 Secret Letter</button>
+<button onclick="startGame()">🎮 Love Game</button>
+
+<!-- Surprise -->
+<div id="surprise" class="card">
+    <p class="heart">❤️</p>
+    <p>You make my future feel safe, warm, and beautiful.</p>
+    <p>I can't wait to celebrate every birthday beside you.</p>
+</div>
+
+<!-- Love Letter -->
+<div id="letter" class="card">
+<p>
+Dear Love,<br><br>
+Maybe today is your birthday,  
+but you are the gift life is preparing for me.<br><br>
+
+From your childhood smiles to the man you are becoming,
+every version of you is special to me.<br><br>
+
+I hope our future is filled with laughter,
+late-night talks, silly fights,
+and endless memories together. 💫❤️
+</p>
+</div>
+
+<!-- Game -->
+<div id="game" class="gameBox">
+<p>Who loves you more? 😌</p>
+<button onclick="gameAnswer()">Click to find out</button>
+<p id="gameResult"></p>
+</div>
+
+<script>
+function showSurprise(){
+    document.getElementById("surprise").style.display="block";
+}
+
+/* Cake + Confetti */
+function cutCake(){
+    for(let i=0;i<70;i++){
+        let c=document.createElement("div");
+        c.className="confetti";
+        c.style.left=Math.random()*100+"vw";
+        c.style.animationDuration=(Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+
+        setTimeout(()=>c.remove(),4000);
+    }
+    alert("🎂 Cake Cut! Make a birthday wish ❤️");
+}
+
+function showLetter(){
+    document.getElementById("letter").style.display="block";
+}
+
+function startGame(){
+    document.getElementById("game").style.display="block";
+}
+
+function gameAnswer(){
+    document.getElementById("gameResult")
+    .innerHTML="Correct answer: YOU + ME = FOREVER 😄❤️";
+}
+</script>
+
+</body>
+</html>
